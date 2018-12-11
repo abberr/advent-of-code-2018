@@ -6,8 +6,9 @@ public class Main {
 
     public static void main (String [] args) {
 
-        Day day = new Day4();
-        System.out.println(day.solveP1() + "\n" + day.solveP2());
+        Day day = new Day5();
+        day.run();
+
 
         //solveAllPuzzles();
     }

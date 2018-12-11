@@ -5,11 +5,43 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-public class Day4 extends Day{
+public class Day4 extends Day {
 
     public Day4() {
         super(4);
     }
+
+    @Override
+    public String solveP1() {
+        Map<Integer, Integer[]> guards = getTimetable(input);
+
+        int maxGuard = guards.entrySet()
+                .stream()
+                .max((entry1, entry2) -> Arrays.stream(entry1.getValue()).mapToInt(i -> i).sum() > Arrays.stream(entry2.getValue()).mapToInt(i -> i).sum() ? 1 : -1)
+                .get().getKey();
+
+        int maxMinute = IntStream.range(0, 60)
+                .reduce((a, b) -> guards.get(maxGuard)[a] < guards.get(maxGuard)[b] ? b : a)
+                .getAsInt();
+
+        return "" + maxGuard * maxMinute;
+    }
+
+    @Override
+    public String solveP2() {
+        Map<Integer, Integer[]> guards = getTimetable(input);
+
+        int maxGuard = guards.entrySet().stream()
+                .max((e1, e2) -> Arrays.stream(e1.getValue()).reduce(Integer::max).get() > Arrays.stream(e2.getValue()).reduce(Integer::max).get() ? 1 : -1)
+                .get().getKey();
+
+        int maxMinute = IntStream.range(0, 60)
+                .reduce((a, b) -> guards.get(maxGuard)[a] < guards.get(maxGuard)[b] ? b : a)
+                .getAsInt();
+
+        return "" + maxGuard * maxMinute;
+    }
+
 
     private Map<Integer, Integer[]> getTimetable(String[] input) {
         Map<Integer, Integer[]> guards = new HashMap<>();
@@ -22,7 +54,7 @@ public class Day4 extends Day{
             if (line.contains("#")) {
                 guardNo = Integer.parseInt(line.replaceAll(".*#(\\d+).*", "$1"));
                 if (!guards.containsKey(guardNo)) {
-                    guards.put(guardNo, getMinuteArray());
+                    guards.put(guardNo, createMinuteArray());
                 }
             } else if (line.contains("sleep")) {
                 sleepMinute = Integer.parseInt(line.replaceAll(".*:(\\d+).*", "$1"));
@@ -36,7 +68,7 @@ public class Day4 extends Day{
         return guards;
     }
 
-    private static Integer[] getMinuteArray() {
+    private static Integer[] createMinuteArray() {
         Integer[] array = new Integer[60];
         for (int i = 0; i < array.length; i++) {
             array[i] = 0;
@@ -46,28 +78,4 @@ public class Day4 extends Day{
     }
 
 
-    @Override
-    public String solveP1() {
-        Map<Integer, Integer[]> guards = getTimetable(input);
-
-        int maxGuard = guards.entrySet()
-                .stream()
-                .max((entry1, entry2) -> Arrays.stream(entry1.getValue()).mapToInt(i -> i).sum() > Arrays.stream(entry2.getValue()).mapToInt(i -> i).sum() ? 1 : -1)
-                .get().getKey();
-
-        System.out.println(maxGuard);
-
-        IntStream.range(0, 60);
-
-//        int maxMinute = Arrays.stream(guards.get(maxGuard)).reduce(Integer::max).
-//                System.out.println(maxMinute);
-
-
-        return "";
-    }
-
-    @Override
-    public String solveP2() {
-        return null;
-    }
 }

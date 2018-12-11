@@ -16,6 +16,16 @@ public abstract class Day {
         }
     }
 
+    public void run() {
+        String p1 = solveP1();
+        System.out.println("Part I: " + p1);
+
+        String p2 = solveP2();
+        System.out.println("Part II: " + p2);
+    }
+
     public abstract String solveP1();
     public abstract String solveP2();
+
+
 }
