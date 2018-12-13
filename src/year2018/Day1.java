@@ -1,6 +1,7 @@
 package year2018;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Day1 extends Day{
 
@@ -10,12 +11,10 @@ public class Day1 extends Day{
 
     @Override
     public String solveP1() {
-        int sum = 0;
-        for (String row : input) {
-            sum += Integer.parseInt(row);
-        }
 
-        return "" + sum;
+        return "" + Arrays.stream(input).mapToInt(Integer::parseInt)
+                .reduce((x,y) -> x+y)
+                .getAsInt();
     }
 
     @Override

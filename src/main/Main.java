@@ -6,7 +6,7 @@ public class Main {
 
     public static void main (String [] args) {
 
-        Day day = new Day5();
+        Day day = new Day7();
         day.run();
 
 

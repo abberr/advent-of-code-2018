@@ -56,7 +56,6 @@ public class Day2 extends Day {
     }
 
     private String commonCharacters(String s1, String s2) {
-        System.out.println(s1 + "\n" + s2);
         return s1.replaceAll("[^"+s2+"]","");
     }
 }
